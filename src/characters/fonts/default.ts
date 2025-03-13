@@ -1,4 +1,13 @@
+import { TitleConfig } from "../../types";
 import { FiveLines } from "../font";
+
+export const defaultFontConfig: Partial<TitleConfig> = {
+  fillChar: '█',
+  triangleLeftFillChar: '▛',
+  triangleRightFillChar: '▟',
+  triangleLeftEmptyChar: '▙',
+  triangleRightEmptyChar: '▜',
+}
 
 export const defaultFont: { [key: string]: FiveLines } = {
   'A': [
