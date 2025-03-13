@@ -1,4 +1,4 @@
-import { getCharacter, Lines } from "../characters";
+import { getCharacter, Lines, fonts } from "../characters";
 import { TitleConfig, defaultConfig } from '../types';
 import { convertTriangleChar } from "../utils/slashes";
 import { colorString } from "./color";
@@ -7,27 +7,25 @@ import { colorString } from "./color";
 export const toLineArray = (input: Lines): number[][] => {
   // Convert strings to arrays of numbers
   const result = input.map(line => {
-
     const l = line.split('');
     return l.map((c) => convertTriangleChar(c)).map(Number);
   });
-
   return result;
 };
 
 export const convertToText = (input: string, config?: Partial<TitleConfig>): string[] => {
+  const fontType = config?.font || defaultConfig.font;
+  const fontConfig = fonts[fontType].config || {};
+  const cfg = { ...defaultConfig, ...fontConfig, ...config };
 
-  const cfg = { ...defaultConfig, ...config };
   // Get character data and convert each character to a number grid
   const characterData = input.split('').map((c) => getCharacter(c, cfg.font));
 
   if (characterData.length === 0) return [];
 
   // Each character is always exactly 5 lines tall
-
   // get the lines of the defined font
   const lineCount = characterData[0].length;
-
   const totalLines = lineCount;
 
   // Construct each output line
@@ -44,7 +42,9 @@ export const convertToText = (input: string, config?: Partial<TitleConfig>): str
 
 
 export const convertToTitleLines = (input: string, config: Partial<TitleConfig> = {}): string[] => {
-  const cfg = { ...defaultConfig, ...config };
+  const fontType = config?.font || defaultConfig.font;
+  const fontConfig = fonts[fontType].config || {};
+  const cfg = { ...defaultConfig, ...fontConfig, ...config };
 
   const lines = convertToText(input, cfg);
 
@@ -68,7 +68,9 @@ export const convertToTitleLines = (input: string, config: Partial<TitleConfig> 
 };
 
 export const logTitle = (input: string, config: Partial<TitleConfig> = {}): void => {
-  const cfg = { ...defaultConfig, ...config };
+  const fontType = config?.font || defaultConfig.font;
+  const fontConfig = fonts[fontType].config || {};
+  const cfg = { ...defaultConfig, ...fontConfig, ...config };
   const lines = convertToTitleLines(input, cfg);
   lines.forEach(line => console.log(line));
 };
