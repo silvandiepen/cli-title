@@ -2,7 +2,7 @@ import { convertToText, convertToTitleLines, logTitle, toLineArray } from "../ut
 
 describe('toLineArray', () => {
   it('should convert to an array with proper lines for dots', () => {
-    const result = toLineArray(['//0X','0X0X','XXXX','X00X','X00X'])
+    const result = toLineArray(['//0X', '0X0X', 'XXXX', 'X00X', 'X00X'])
     expect(result).toStrictEqual([
       [0, 0, 0, 1],
       [0, 1, 0, 1],
@@ -13,15 +13,15 @@ describe('toLineArray', () => {
   });
 });
 
-describe('convertToText',()=>{
-  it('should convert to text',()=>{
+describe('convertToText', () => {
+  it('should convert to text', () => {
     const result = convertToText('ABC');
     const expected = [
-         "02110111402114",
-            "25010100101001",
-         "11110111401000",
-         "10010100101001",
-         "10010111503115",
+      "02110111402114",
+      "25010100101001",
+      "11110111401000",
+      "10010100101001",
+      "10010111503115",
     ];
 
     expect(result).toHaveLength(5)
@@ -33,11 +33,11 @@ describe('convertToTitleLines', () => {
   it('should convert text to title lines with default config', () => {
     const result = convertToTitleLines('A');
     expect(result).toStrictEqual([
-        " ◢■■",
-         "◢◤ ■",
-         "■■■■",
-         "■  ■",
-         "■  ■",
+      " ▟██",
+      "▟▛ █",
+      "████",
+      "█  █",
+      "█  █",
     ]);
   });
 
@@ -75,11 +75,11 @@ describe('convertToTitleLines', () => {
     // We can't test the exact color output as it depends on kleur,
     // but we can test the structure and spacing
     expect(result.map(line => line.replace(/\u001b\[.*?m/g, ''))).toStrictEqual([
-         ".>**--***{",
-         "><.*--*..*",
-         "****--***{",
-         "*..*--*..*",
-         "*..*--***<",
+      ".>**--***{",
+      "><.*--*..*",
+      "****--***{",
+      "*..*--*..*",
+      "*..*--***<",
     ]);
   });
 
@@ -102,12 +102,13 @@ describe('logTitle', () => {
 
   it('should log title lines to console', () => {
     logTitle('A');
+
     expect(consoleSpy).toHaveBeenCalledTimes(5);
-    expect(consoleSpy).toHaveBeenNthCalledWith(1, ' ◢■■');
-    expect(consoleSpy).toHaveBeenNthCalledWith(2, '◢◤ ■');
-    expect(consoleSpy).toHaveBeenNthCalledWith(3, '■■■■');
-    expect(consoleSpy).toHaveBeenNthCalledWith(4, '■  ■');
-    expect(consoleSpy).toHaveBeenNthCalledWith(5, '■  ■');
+    expect(consoleSpy).toHaveBeenNthCalledWith(1, ' ▟██');
+    expect(consoleSpy).toHaveBeenNthCalledWith(2, "▟▛ █");
+    expect(consoleSpy).toHaveBeenNthCalledWith(3, "████");
+    expect(consoleSpy).toHaveBeenNthCalledWith(4, "█  █");
+    expect(consoleSpy).toHaveBeenNthCalledWith(5, "█  █");
   });
 
   it('should log title lines with custom config', () => {
