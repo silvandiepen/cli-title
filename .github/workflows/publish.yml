@@ -1,0 +1,67 @@
+name: Publish Package
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - 'package.json'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Get version from conventional commits
+        id: version
+        uses: paulhatch/semantic-version@v5.0.3
+        with:
+          tag_prefix: "v"
+          major_pattern: "BREAKING CHANGE:"
+          minor_pattern: "feat:"
+          patch_pattern: "fix:"
+          format: "${major}.${minor}.${patch}"
+
+      - name: Create version update branch
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git checkout -b version-update-${{ steps.version.outputs.version }}
+          npm version ${{ steps.version.outputs.version }} --no-git-tag-version
+          git add package.json
+          git commit -m "chore: update version to ${{ steps.version.outputs.version }}"
+          git push origin version-update-${{ steps.version.outputs.version }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: "chore: update version to ${{ steps.version.outputs.version }}"
+          body: "Update package version to ${{ steps.version.outputs.version }}"
+          branch: version-update-${{ steps.version.outputs.version }}
+          base: develop
+          delete-branch: true
+
+      - name: Create Git tag
+        run: |
+          git tag -a v${{ steps.version.outputs.version }} -m "Release v${{ steps.version.outputs.version }}"
+          git push origin v${{ steps.version.outputs.version }}
+
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
