@@ -13,11 +13,11 @@ export const getCharacter = (character: string, fontType: FontType = 'default'):
   const selectedFont = fonts[fontType];
 
   // Try to find an exact match first
-  if (selectedFont[character]) return toLineArray(selectedFont[character]); // Case-sensitive match
+  if (selectedFont.characters[character]) return toLineArray(selectedFont.characters[character]); // Case-sensitive match
 
   // If exact match is not found, fall back to lowercase or uppercase version
-  if (selectedFont[lowerChar]) return toLineArray(selectedFont[lowerChar]);
-  if (selectedFont[upperChar]) return toLineArray(selectedFont[upperChar]);
+  if (selectedFont.characters[lowerChar]) return toLineArray(selectedFont.characters[lowerChar]);
+  if (selectedFont.characters[upperChar]) return toLineArray(selectedFont.characters[upperChar]);
 
   // Return an empty character if no match is found
   return toLineArray([
