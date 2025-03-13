@@ -1,3 +1,4 @@
+import { Lines } from "./characters";
 
 export type FontType = 'default' | 'pixel' | 'block' |  'hybrid' | 'massive' | 'digital';
 
@@ -30,6 +31,15 @@ export interface TitleConfig {
   font: FontType;
   color?: ColorNamesType | string;
   space: string;
+}
+
+export interface FontConfig extends Omit<TitleConfig, 'font'> {}
+
+export interface FontDefinition {
+  characters: {
+    [key: string]: Lines;
+  };
+  config?: Partial<FontConfig>;
 }
 
 export const defaultConfig: TitleConfig = {
