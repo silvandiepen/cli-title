@@ -4,6 +4,7 @@ import { Color } from "kleur";
 
 logTitle('abcdefg');
 console.log()
+logTitle('ABC');
 logTitle('ABCDEFG');
 
 console.log('-----')
@@ -52,13 +53,11 @@ logTitle('abcdefghij',{
   font: 'digital'
 })
 
-// console.log('-----')
-
-// logTitle('opqrst')
-// logTitle('OPQRST')
-
-// console.log('-----')
+logTitle('ABCDEFGHIJKLM');
+logTitle('abcdefghijklm');
+logTitle('0123456789');
 
 
-// logTitle('uvwxyz')
-// logTitle('UVWXYZ')
+logTitle('CLI TITLE',{
+  font: 'digital'
+})
