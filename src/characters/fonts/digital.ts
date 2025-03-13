@@ -1,5 +1,9 @@
+import { TitleConfig } from "../../types";
 import { ElevenLines } from "../font";
 
+export const digitalFontConfig: Partial<TitleConfig> = {
+
+}
 // For numbers, we use the classic 7-segment display pattern
 export const sevenSegmentNumbers: { [key: string]: ElevenLines } = {
   // 0: All segments except middle
@@ -186,7 +190,7 @@ export const twelveSegmentLetters: { [key: string]: ElevenLines } = {
 
   'C': [
     ' ◀■■▶ ',
-    '▲    ▲',
+    '▲     ',
     '■     ',
     '■     ',
     '▼     ',
@@ -194,7 +198,7 @@ export const twelveSegmentLetters: { [key: string]: ElevenLines } = {
     '▲     ',
     '■     ',
     '■     ',
-    '▼    ▲',
+    '▼     ',
     ' ◀■■▶ ',
   ],
 
