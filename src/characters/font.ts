@@ -11,7 +11,7 @@ import { FontType, FontDefinition } from '../types';
 import { blockFont } from './fonts/block';
 import { massiveFont } from './fonts/massive';
 import { hybridFont } from './fonts/hybrid';
-import { digitalFont } from './fonts/digital';
+import { digitalFont, digitalFontConfig } from './fonts/digital';
 
 export const fonts: { [key in FontType]: FontDefinition } = {
   default: { characters: defaultFont, config: defaultFontConfig },
@@ -19,6 +19,6 @@ export const fonts: { [key in FontType]: FontDefinition } = {
   block: { characters: blockFont },
   massive: { characters: massiveFont },
   hybrid: { characters: hybridFont },
-  digital: { characters: digitalFont }
+  digital: { characters: digitalFont, config: digitalFontConfig }
 };
 
